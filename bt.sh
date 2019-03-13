@@ -1,217 +1,217 @@
 #!/bin/bash
-##¼ì²é²Ù×÷ÏµÍ³
-check_sys(){
-	if [[ -f /etc/redhat-release ]]; then
-		release="centos"
-	elif cat /etc/issue | grep -q -E -i "debian"; then
-		release="debian"
-	elif cat /etc/issue | grep -q -E -i "ubuntu"; then
-		release="ubuntu"
-	elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
-		release="centos"
-	elif cat /proc/version | grep -q -E -i "debian"; then
-		release="debian"
-	elif cat /proc/version | grep -q -E -i "ubuntu"; then
-		release="ubuntu"
-	elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
-		release="centos"
-    fi
-	bit=`uname -m`
+##æ£€æŸ¥æ“ä½œç³»ç»Ÿ
+æ£€æŸ¥ç³»ç»Ÿ(){
+	å¦‚æœ [[ -f/etc/redhat-é‡Šæ”¾]; ç„¶å
+é‡Šæ”¾="CentOS"
+	åŸƒåˆ©å¤«CAT/ETC/é—®é¢˜|GREP-Q-E-I"å¾·æ¯”å®‰"; ç„¶å
+é‡Šæ”¾="å¾·æ¯”å®‰"
+	åŸƒåˆ©å¤«CAT/ETC/é—®é¢˜|GREP-Q-E-I"ä¹Œæœ¬å›¾"; ç„¶å
+é‡Šæ”¾="ä¹Œæœ¬å›¾"
+	åŸƒåˆ©å¤«CAT/ETC/é—®é¢˜|GREP-Q-E-I"çº¢å¸½"; ç„¶å
+é‡Šæ”¾="CentOS"
+	åŸƒåˆ©å¤«CAT/proc/ç‰ˆæœ¬|GREP-Q-E-I"å¾·æ¯”å®‰"; ç„¶å
+é‡Šæ”¾="å¾·æ¯”å®‰"
+	åŸƒåˆ©å¤«CAT/proc/ç‰ˆæœ¬|GREP-Q-E-I"ä¹Œæœ¬å›¾"; ç„¶å
+é‡Šæ”¾="ä¹Œæœ¬å›¾"
+	åŸƒåˆ©å¤«CAT/proc/ç‰ˆæœ¬|GREP-Q-E-I"çº¢å¸½"; ç„¶å
+é‡Šæ”¾="CentOS"
+    è²
+ä½=`ç¾å§†`
 }
 
-##¼ì²éÊÇ·ñrootÓÃ»§
-[ $(id -u) != "0" ] && { echo -e " ¡°\033[31m Error: ±ØĞëÊ¹ÓÃrootÓÃ»§Ö´ĞĞ´Ë½Å±¾£¡\033[0m¡±"; exit 1; }
-##¶¨Òå³£ÓÃÊôĞÔ
-Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
-Info="${Green_font_prefix}[ĞÅÏ¢]${Font_color_suffix}"
-Error="${Red_font_prefix}[´íÎó]${Font_color_suffix}"
-Tip="${Green_font_prefix}[×¢Òâ]${Font_color_suffix}"
+##æ£€æŸ¥æ˜¯å¦æ ¹ç”¨æˆ·
+[ $(ID-u) != "0" ] && { å›æ³¢-e"â€œ\033[31mé”™è¯¯ï¼šå¿…é¡»ä½¿ç”¨rootç”¨æˆ·æ‰§è¡Œæ­¤è„šæœ¬ï¼\033[0m]"; å‡ºå£ 1; }
+##å®šä¹‰å¸¸ç”¨å±æ€§
+ç»¿è‰²å­—ä½“å‰ç¼€="\033[32ç±³]" &&çº¢è‰²å­—ä½“å‰ç¼€="\033[3100ä¸‡]" &&ç»¿è‰²èƒŒæ™¯å‰ç¼€="\033[42ï¼›37ç±³]" &&çº¢è‰²èƒŒæ™¯å‰ç¼€="\033[41ï¼›37ç±³]" &&å­—ä½“é¢œè‰²åç¼€="\033[0m]"
+ä¿¡æ¯="${ç»¿è‰²å­—ä½“å‰ç¼€}[ä¿¡æ¯]${Font_color_åç¼€}"
+è¯¯å·®="${çº¢è‰²å­—ä½“å‰ç¼€}[é”™è¯¯]${Font_color_åç¼€}"
+å°–ç«¯="${ç»¿è‰²å­—ä½“å‰ç¼€}[æ³¨æ„]${Font_color_åç¼€}"
 
-clear
-#±¦Ëşsspanel-v3-mod-uim¿ìËÙ²¿Êğ¹¤¾ß
-echo -e "¸ĞĞ»Ê¹ÓÃ ¡°\033[32m ±¦Ëşsspanel-v3-mod-uim¿ìËÙ²¿Êğ¹¤¾ß \033[0m¡±"
-echo "----------------------------------------------------------------------------"
-echo -e "Çë×¢ÒâÕâĞ©ÒªÇó:¡°\033[31m ±¦Ëş°æ±¾=5.9 \033[0m¡±£¬Ìí¼ÓÍøÖ·PHP°æ±¾±ØĞëÑ¡ÔñÎª¡°\033[31m PHP7.1 \033[0m¡±,Ìí¼ÓÍê³ÉºóµØÖ·²»Òª¸Ä¶¯£¡"
-echo "----------------------------------------------------------------------------"
-stty erase '^H' && read -p "ÇëÊäÈë±¦ËşÃæ°åÌí¼ÓµÄÍøÕ¾ÓòÃû,Çë²»ÒªĞŞ¸ÄÌí¼ÓÖ®ºóµÄÄ¬ÈÏµØÖ·£¨ÀıÈç:www.baidu.com£¬²»´øhttp/https£©£º" website
-stty erase '^H' && read -p "ÇëÊäÈë±¦ËşÃæ°åÌí¼ÓµÄMySQLÓÃ»§Ãû£º" mysqlusername
-stty erase '^H' && read -p "ÇëÊäÈë±¦ËşÃæ°åÌí¼ÓµÄMySQLÊı¾İ¿âÃû£º" mysqldatabase
-stty erase '^H' && read -p "ÇëÊäÈë±¦ËşÃæ°åÌí¼ÓµÄMySQLÃÜÂë£º" mysqlpassword
-stty erase '^H' && read -p "ÇëÊäÈëÍøÕ¾µÄmukey(ÓÃÓÚwebapi·½Ê½¶Ô½Óºó¶Ë£¬¿ÉÒÔ×Ô¶¨Òå)£º" sspanelmukey
-sleep 1
-echo -e "${Info} ÇëÈ·ÈÏÄúÊäÈëµÄÍøÕ¾ÓòÃû£º$website"
-echo -e "${Info} ÇëÈ·ÈÏÄúÊäÈëµÄMySQLÓÃ»§Ãû£º$mysqlusername"
-echo -e "${Info} ÇëÈ·ÈÏÄúÊäÈëµÄMySQLÓÃ»§Ãû£º$mysqldatabase"
-echo -e "${Info} ÇëÈ·ÈÏÄúÊäÈëµÄMySQLÃÜÂë£º$mysqlpassword"
-echo -e "${Info} ÇëÈ·ÈÏÄúÊäÈëµÄmukey£º$sspanelmukey"
-stty erase '^H' && read -p " ÇëÊäÈëÊı×Ö(1£º¼ÌĞø£»2£ºÍË³ö) [1/2]:" status
-case "$status" in
+æ¸…æ¾ˆ
+#å®å¡”sspanel-v3-mod-umå¿«é€Ÿéƒ¨ç½²å·¥å…·
+å›æ³¢-e"æ„Ÿè°¢ä½¿ç”¨â€œ\033[32må®å¡”sspanel-v3-mod-uIMå¿«é€Ÿéƒ¨ç½²å·¥å…·\033[0m]â€"
+å›æ³¢ "----------------------------------------------------------------------------"
+å›æ³¢-e"è¯·æ³¨æ„è¿™äº›è¦æ±‚ï¼šâ€œ\033[31må®å¡”ç‰ˆæœ¬=5.9\033[0mâ€ï¼Œæ·»åŠ ç½‘å€PHPç‰ˆæœ¬å¿…é¡»é€‰æ‹©ä¸ºâ€œ\033][31m PHP7.1\033][0mâ€ï¼Œæ·»åŠ å®Œæˆååœ°å€ä¸è¦æ”¹åŠ¨ï¼"
+å›æ³¢ "----------------------------------------------------------------------------"
+sttyæ“¦é™¤'^H' && æœ—è¯»ï¼Œé˜…è¯»-p"è¯·è¾“å…¥å®å¡”é¢æ¿æ·»åŠ çš„ç½‘ç«™åŸŸåï¼Œè¯·ä¸è¦ä¿®æ”¹æ·»åŠ ä¹‹åçš„é»˜è®¤åœ°å€(ä¾‹å¦‚ï¼šwww.Baidu.comï¼Œä¸å¸¦http/https)ï¼š"ç½‘ç«™
+sttyæ“¦é™¤'^H' && æœ—è¯»ï¼Œé˜…è¯»-p"è¯·è¾“å…¥å®å¡”é¢æ¿æ·»åŠ çš„mysqlç”¨æˆ·åï¼š"ç‰¡è›åç§°
+sttyæ“¦é™¤'^H' && æœ—è¯»ï¼Œé˜…è¯»-p"è¯·è¾“å…¥å®å¡”é¢æ¿æ·»åŠ çš„mysqlæ•°æ®åº“åï¼š"mysqlæ•°æ®åº“
+sttyæ“¦é™¤'^H' && æœ—è¯»ï¼Œé˜…è¯»-p"è¯·è¾“å…¥å®å¡”é¢æ¿æ·»åŠ çš„mysqlå¯†ç ï¼š"mysqlå¯†ç 
+sttyæ“¦é™¤'^H' && æœ—è¯»ï¼Œé˜…è¯»-p"è¯·è¾“å…¥ç½‘ç«™çš„mukey(ç”¨äºwebapiæ–¹å¼å¯¹æ¥åç«¯ï¼Œå¯ä»¥è‡ªå®šä¹‰)ï¼š"æ–¯å¸•
+ç¡çœ 1
+å›æ³¢-e"${Info}è¯·ç¡®è®¤æ‚¨è¾“å…¥çš„ç½‘ç«™åŸŸåï¼š$ç½‘ç«™"
+å›æ³¢-e"${Info}è¯·ç¡®è®¤æ‚¨è¾“å…¥çš„mysqlç”¨æˆ·åï¼š$mysqsuername"
+å›æ³¢-e"${Info}è¯·ç¡®è®¤æ‚¨è¾“å…¥çš„mysqlç”¨æˆ·åï¼š$mysqlæ•°æ®åº“"
+å›æ³¢-e"${Info}è¯·ç¡®è®¤æ‚¨è¾“å…¥çš„mysqlå¯†ç ï¼š$mysqlå¯†ç "
+å›æ³¢-e"${Info}è¯·ç¡®è®¤æ‚¨è¾“å…¥çš„mukeyï¼š$sspanelmukey"
+sttyæ“¦é™¤'^H' && æœ—è¯»ï¼Œé˜…è¯»-p"è¯·è¾“å…¥æ•°å­—(1ï¼šç»§ç»­ï¼›2ï¼šé€€å‡º)[1/2]ï¼š"åœ°ä½
+æ¡ˆä¾‹ "$Status" åœ¨â€¦â€¦é‡Œé¢
 	1)
-	echo -e "${Info} ÄúÑ¡ÔñÁË¼ÌĞø£¬¿ªÊ¼°²×°³ÌĞò£¡"
+	å›æ³¢-e"${Info}æ‚¨é€‰æ‹©äº†ç»§ç»­ï¼Œå¼€å§‹å®‰è£…ç¨‹åºï¼"
 	;;
 	2)
-	echo -e "${Tip} ÄúÑ¡ÔñÁËÍË³ö£¬ÇëÖØĞÂÖ´ĞĞ°²×°³ÌĞò£¡" && exit 1
+	å›æ³¢-e"${Tip}æ‚¨é€‰æ‹©äº†é€€å‡ºï¼Œè¯·é‡æ–°æ‰§è¡Œå®‰è£…ç¨‹åºï¼" && å‡ºå£ 1
 	;;
 	*)
-	echo -e  "${Error} ÇëÊäÈëÕıÈ·Öµ [1/2]£¬ÇëÖØĞÂÖ´ĞĞ°²×°³ÌĞò" && exit 1
+	å›æ³¢-e"${Error}è¯·è¾“å…¥æ­£ç¡®å€¼[1/2]ï¼Œè¯·é‡æ–°æ‰§è¡Œå®‰è£…ç¨‹åº" && å‡ºå£ 1
 	;;
-esac
-echo -e "${Info} ÇëµÈ´ıÏµÍ³×Ô¶¯²Ù×÷......"
-cd /www/wwwroot/$website
-rm -rf index.html 404.html
-##°²×°git unzip crontab
-echo -e "${Info} ÕıÔÚ¼ì²â°²×°git¡¢unzip¡¢crontab¹¤¾ß"
-yum install git unzip crontab -y
-echo -e "${Info} ¼ì²â°²×°git¡¢unzip¡¢crontab¹¤¾ßÒÑÍê³É"
-sleep 1
-##ÏÂÔØ½âÑ¹¿½±´Ô´Âë
-echo -e "${Info} ÕıÔÚÏÂÔØ½âÑ¹´¦Àí³ÌĞòÔ´Âë"
-wget -N --no-check-certificate "https://github.com/71394452/-/blob/master/ss-panel-v3-mod_Uim-dev.zip"
-unzip dev.zip
-cd ss-panel-v3-mod_Uim-dev
-mv * .[^.]* /www/wwwroot/$website/
-cd ..
-rm -rf dev.zip ss-panel-v3-mod_Uim-dev/
-echo -e "${Info} ÏÂÔØ½âÑ¹´¦Àí³ÌĞòÔ´ÂëÒÑÍê³É"
-sleep 1
-##´¦Àíphpº¯Êı
-echo -e "${Info} ÕıÔÚ´¦Àí±¦ËşphpÄÚÈİ"
-sed -i 's/system,//g' /www/server/php/71/etc/php.ini
-sed -i 's/proc_open,//g' /www/server/php/71/etc/php.ini
-sed -i 's/proc_get_status,//g' /www/server/php/71/etc/php.ini
-sed -i 's/dynamic/static/g' /www/server/php/71/etc/php-fpm.conf
-sed -i 's/display_errors = On/display_errors = Off/g' /www/server/php/71/etc/php.ini
-echo -e "${Info} ´¦Àí±¦ËşphpÄÚÈİÒÑÍê³É"
-sleep 1
-##µ¼ÈëÊı¾İ¿â
-echo -e "${Info} ÕıÔÚµ¼ÈëÊı¾İ¿â"
-cd sql/
-mysql -u$mysqlusername -p$mysqlpassword $mysqldatabase < glzjin_all.sql >/dev/null 2>&1
-echo -e "${Info} µ¼ÈëÊı¾İ¿âÒÑÍê³É"
-sleep 1
-##°²×°ÒÀÀµ
-echo -e "${Info} ÕıÔÚ°²×°ÒÀÀµ"
-cd ..
-chown -R root:root *
-chmod -R 755 *
-chown -R www:www storage
-php composer.phar install
-echo -e "${Info} °²×°ÒÀÀµÒÑÍê³É"
-sleep 1
-##´¦ÀínginxÎ±¾²Ì¬ºÍÔËĞĞÄ¿Â¼
-echo -e "${Info} ÕıÔÚ´¦ÀínginxÄÚÈİ"
-echo "location / {try_files \$uri \$uri/ /index.php\$is_args\$args;}"> /www/server/panel/vhost/rewrite/$website.conf
-sed -i "s/\/www\/wwwroot\/${website}/\/www\/wwwroot\/$website\/public/g" /www/server/panel/vhost/nginx/$website.conf
-echo -e "${Info} ´¦ÀínginxÄÚÈİÒÑÍê³É"
-sleep 1
-##³õÊ¼»¯Õ¾µãĞÅÏ¢
-echo -e "${Info} ÕıÔÚÅäÖÃÕ¾µã»ù±¾ĞÅÏ¢"
-cd /www/wwwroot/$website
-cp config/.config.php.for7color config/.config.php
-sed -i "s/websiteurl/$website/g" /www/wwwroot/$website/config/.config.php
-sed -i "s/sspanel-mukey/$sspanelmukey/g" /www/wwwroot/$website/config/.config.php
-sed -i "s/sspanel-db-databasename/$mysqldatabase/g" /www/wwwroot/$website/config/.config.php
-sed -i "s/sspanel-db-username/$mysqlusername/g" /www/wwwroot/$website/config/.config.php
-sed -i "s/sspanel-db-password/$mysqlpassword/g" /www/wwwroot/$website/config/.config.php
-echo -e "${Info} ÅäÖÃÕ¾µã»ù±¾ĞÅÏ¢ÒÑÍê³É"
-sleep 1
-##ÏÂÔØIP½âÎö¿â  ÏÂÔØssr³ÌÊ½
-echo -e "${Info} ÕıÔÚÏÂÔØip½âÎö¿â"
-sleep 1
-echo -e "${Info} ÏÂÔØip½âÎö¿âÒÑÍê³É"
-sleep 1
-echo -e "${Info} ÕıÔÚÏÂÔØssr³ÌÊ½"
-sleep 1
-echo -e "${Info} ÏÂÔØssr³ÌÊ½ÒÑÍê³É"
-sleep 1
-##¼ÓÈë¶¨Ê±ÈÎÎñ
-echo -e "${Info} ÕıÔÚÌí¼Ó¶¨Ê±ÈÎÎñ"
-echo "30 22 * * * php /www/wwwroot/$website/xcat sendDiaryMail" >> /var/spool/cron/root
-echo "0 0 * * * php -n /www/wwwroot/$website/xcat dailyjob" >> /var/spool/cron/root
-echo "*/1 * * * * php /www/wwwroot/$website/xcat checkjob" >> /var/spool/cron/root
-echo "*/1 * * * * php /www/wwwroot/$website/xcat syncnode" >> /var/spool/cron/root
-chkconfig ¨Clevel 35 crond on
-/sbin/service crond restart
-echo -e "${Info} Ìí¼Ó¶¨Ê±ÈÎÎñÒÑÍê³É"
-sleep 1
-##ÖØÆôphpºÍnginx
-echo -e "${Info} ÕıÔÚÖØÆôPHP"
-/etc/init.d/php-fpm-71 restart
-echo -e "${Info} ÖØÆôPHPÒÑÍê³É"
-sleep 1
-echo -e "${Info} ÕıÔÚÖØÆôNGINX"
-/etc/init.d/nginx restart
-echo -e "${Info} ÖØÆôNGINXÒÑÍê³É"
-sleep 3
-echo -e "${Tip} °²×°¼´½«Íê³É£¬µ¹ÊıÎå¸öÊı£¡"
-sleep 1
-clear
-echo "-----------------------------"
-echo "#############################"
-echo "########           ##########"
-echo "########   ##################"
-echo "########   ##################"
-echo "########           ##########"
-echo "###############    ##########"
-echo "###############    ##########"
-echo "########           ##########"
-echo "#############################"
-sleep 1
-clear
-echo "-----------------------------"
-echo "#############################"
-echo "#######   ####   ############"
-echo "#######   ####   ############"
-echo "#######   ####   ############"
-echo "#######               #######"
-echo "##############   ############"
-echo "##############   ############"
-echo "##############   ############"
-echo "#############################"
-sleep 1
-clear
-echo "-----------------------------"
-echo "#############################"
-echo "########            #########"
-echo "#################   #########"
-echo "#################   #########"
-echo "########            #########"
-echo "#################   #########"
-echo "#################   #########"
-echo "########            #########"
-echo "#############################"
-sleep 1
-clear
-echo "-----------------------------"
-echo "#############################"
-echo "########           ##########"
-echo "################   ##########"
-echo "################   ##########"
-echo "########           ##########"
-echo "########   ##################"
-echo "########   ##################"
-echo "########           ##########"
-echo "#############################"
-sleep 1
-clear
-echo "-----------------------------"
-echo "#############################"
-echo "############   ##############"
-echo "############   ##############"
-echo "############   ##############"
-echo "############   ##############"
-echo "############   ##############"
-echo "############   ##############"
-echo "############   ##############"
-echo "#############################"
-echo "-----------------------------"
-sleep 1
-clear
-echo "--------------------------------------------------------------------------------"
-echo -e "${Info} ²¿ÊğÍê³É£¬Çë´ò¿ªhttp://$website¼´¿Éä¯ÀÀ"
-echo -e "${Info} Ä¬ÈÏÉú³ÉµÄ¹ÜÀíÔ±ÓÃ»§Ãû£ºadmin ÃÜÂëÎª7colorblog"
-echo -e "${Info} Èç¹û´ò²»¿ªÕ¾µã£¬Çëµ½±¦ËşÃæ°åÖĞÈí¼ş¹ÜÀíÖØÆônginxºÍphp7.1"
-echo -e "${Info} ×Ô¶¨ÒåÅäÖÃ£¬Çë´ò¿ª/www/wwwroot/$website/config/.config.php½øĞĞĞŞ¸Ä"
-echo -e "${Info} githubµØÖ·:https://github.com/lizhongnian/sspanel-v3-mod-uim-bt"
-echo -e "${Info} ²©¿ÍµØÖ·:https://www.7colorblog.com/"
-echo "--------------------------------------------------------------------------------"
+ESAC
+å›æ³¢-e"${Info}è¯·ç­‰å¾…ç³»ç»Ÿè‡ªåŠ¨æ“ä½œ."
+å…‰ç›˜/www/wwroot/www/wwroot/$ç½‘ç«™
+rm-rf index.html 404.html
+##å®‰è£…gitè§£å‹ç¼©crontab
+å›æ³¢-e"${Info}æ­£åœ¨æ£€æµ‹å®‰è£…gitã€è§£å‹ç¼©ã€crontabå·¥å…·"
+Yumå®‰è£…gitè§£å‹ç¼©crontab-y
+å›æ³¢-e"${Info}æ£€æµ‹å®‰è£…gitã€è§£å‹ç¼©ã€crontabå·¥å…·å·²å®Œæˆ"
+ç¡çœ 1
+##ä¸‹è½½è§£å‹æ‹·è´æºç 
+å›æ³¢-e"${Info}æ­£åœ¨ä¸‹è½½è§£å‹å¤„ç†ç¨‹åºæºç "
+Wget-N-æ— æ”¯ç¥¨è¯ä¹¦"httpsï¼š/github.com/lizhongnian/ss-é¢æ¿-v3-mod_uIM/å­˜æ¡£/dev.zip"
+è§£å‹ç¼©dev.zip
+å…‰ç›˜SS-Panel-v3-mod_uim-dev
+ä¸­å‹* .[^.]*/www/wwroot/www/wwroot/$ç½‘ç«™/
+å…‰ç›˜ ..
+rm-rf dev.zip ss-é¢æ¿-v3-mod_uIM-dev/
+å›æ³¢-e"${Info}ä¸‹è½½è§£å‹å¤„ç†ç¨‹åºæºç å·²å®Œæˆ"
+ç¡çœ 1
+##å¤„ç†phpå‡½æ•°
+å›æ³¢-e"${Info}æ­£åœ¨å¤„ç†å®å¡”phpå†…å®¹"
+SED-I'S/System/g'/www/server/php/71/etc/php.ini
+SED-I'S/proc_openï¼Œ/g'/www/server/php/71/etc/php.ini
+SED-I'S/proc_get_stateï¼Œ/g'/www/server/php/71/etc/php.ini
+SED-I'S/åŠ¨æ€/é™æ€/g'/www/server/php/71/etc/php-fpm.conf
+SED-I'S/Display_Error=ON/Display_Error=off/g'/www/server/php/71/etc/php.ini
+å›æ³¢-e"${Info}å¤„ç†å®å¡”phpå†…å®¹å·²å®Œæˆ"
+ç¡çœ 1
+##å¯¼å…¥æ•°æ®åº“
+å›æ³¢-e"${Info}æ­£åœ¨å¯¼å…¥æ•°æ®åº“"
+å…‰ç›˜SQL/
+MySQL-u$mysqsuername-p$mysqlå¯†ç  $mysqlæ•°æ®åº“ <glzjin_all.sql>/dev/NULL2>&1
+å›æ³¢-e"${Info}å¯¼å…¥æ•°æ®åº“å·²å®Œæˆ"
+ç¡çœ 1
+##å®‰è£…ä¾èµ–
+å›æ³¢-e"${Info}æ­£åœ¨å®‰è£…ä¾èµ–"
+å…‰ç›˜ ..
+Chown-Ræ ¹ï¼šæ ¹*
+chmod-R 755*
+Chown-R WWWï¼šwwwå­˜å‚¨
+PHP Composer.pharå®‰è£…
+å›æ³¢-e"${Info}å®‰è£…ä¾èµ–å·²å®Œæˆ"
+ç¡çœ 1
+##å¤„ç†nginxä¼ªé™æ€å’Œè¿è¡Œç›®å½•
+å›æ³¢-e"${Info}æ­£åœ¨å¤„ç†å‡†å†…å®¹"
+å›æ³¢ "ä½ç½®/{TRY_file\$ä¹Œé‡Œ\$URI/index.php\$IS ARGS\$ARGSï¼›}">/www/server/Panel/vhost/rewrite/$ç½‘ç«™.conf
+SED-I"S/www\/wwwroot\/${ç½‘ç«™}/www\/wwwroot\/$ç½‘ç«™\/å…¬ä¼—/g"/www/server/Panel/vhost/nginx/$ç½‘ç«™.conf
+å›æ³¢-e"${Info}å¤„ç†å‡†å†…å®¹å·²å®Œæˆ"
+ç¡çœ 1
+##åˆå§‹åŒ–ç«™ç‚¹ä¿¡æ¯
+å›æ³¢-e"${Info}æ­£åœ¨é…ç½®ç«™ç‚¹åŸºæœ¬ä¿¡æ¯"
+å…‰ç›˜/www/wwroot/www/wwroot/$ç½‘ç«™
+CP config/.config.php.for7color config/.config.php
+SED-I"S/websiteurl/$ç½‘ç«™/g"/www/wwroot/www/wwroot/$ç½‘ç«™/config/.config.php
+SED-I"S/spanel-mukey/$sspanelmukey/g"/www/wwroot/www/wwroot/$ç½‘ç«™/config/.config.php
+SED-I"S/sspanel-db-databasename/$mysqlæ•°æ®åº“/g"/www/wwroot/www/wwroot/$ç½‘ç«™/config/.config.php
+SED-I"S/sspanel-db-ç”¨æˆ·å/$mysqsuername/g"/www/wwroot/www/wwroot/$ç½‘ç«™/config/.config.php
+SED-I"S/sspanel-db-å¯†ç /$mysqlå¯†ç /g"/www/wwroot/www/wwroot/$ç½‘ç«™/config/.config.php
+å›æ³¢-e"${Info}é…ç½®ç«™ç‚¹åŸºæœ¬ä¿¡æ¯å·²å®Œæˆ"
+ç¡çœ 1
+##ä¸‹è½½IPè§£æåº“ä¸‹è½½SSRç¨‹å¼
+å›æ³¢-e"${Info}æ­£åœ¨ä¸‹è½½IPè§£æåº“"
+ç¡çœ 1
+å›æ³¢-e"${Info}ä¸‹è½½IPè§£æåº“å·²å®Œæˆ"
+ç¡çœ 1
+å›æ³¢-e"${Info}æ­£åœ¨ä¸‹è½½SSRç¨‹å¼"
+ç¡çœ 1
+å›æ³¢-e"${Info}ä¸‹è½½SSRç¨‹å¼å·²å®Œæˆ"
+ç¡çœ 1
+##åŠ å…¥å®šæ—¶ä»»åŠ¡
+å›æ³¢-e"${Info}æ­£åœ¨æ·»åŠ å®šæ—¶ä»»åŠ¡"
+å›æ³¢ "30 22*php/www/wwwroot/$ç½‘ç«™/xCATç”µå­é‚®ä»¶" >>/var/spool/cron/root
+å›æ³¢ "0*php-n/www/wwwroot/$ç½‘ç«™/xCATæ—¥æŠ¥" >>/var/spool/cron/root
+å›æ³¢ "*/1*php/www/wwwroot/$ç½‘ç«™/xCATæ”¯ç¥¨ä½œä¸š" >>/var/spool/cron/root
+å›æ³¢ "*/1*php/www/wwwroot/$ç½‘ç«™/xCATåŒæ­¥èŠ‚ç‚¹" >>/var/spool/cron/root
+chkconfig-35çº§crond
+/sbin/service crondé‡æ–°å¯åŠ¨
+å›æ³¢-e"${Info}æ·»åŠ å®šæ—¶ä»»åŠ¡å·²å®Œæˆ"
+ç¡çœ 1
+##é‡å¯phpå’Œnginx
+å›æ³¢-e"${Info}æ­£åœ¨é‡å¯PHP"
+/etc/init.d/php-FPM-71é‡æ–°å¯åŠ¨
+å›æ³¢-e"${Info}é‡å¯å·²å®Œæˆ"
+ç¡çœ 1
+å›æ³¢-e"${Info}æ­£åœ¨é‡å¯Nginx"
+/etc/init.d/nginxé‡æ–°å¯åŠ¨
+å›æ³¢-e"${Info}é‡å¯å‡†å·²å®Œæˆ"
+ç¡çœ 3
+å›æ³¢-e"${Tip}å®‰è£…å³å°†å®Œæˆï¼Œå€’æ•°äº”ä¸ªæ•°ï¼"
+ç¡çœ 1
+æ¸…æ¾ˆ
+å›æ³¢ "-----------------------------"
+å›æ³¢ "#############################"
+å›æ³¢ "########           ##########"
+å›æ³¢ "########   ##################"
+å›æ³¢ "########   ##################"
+å›æ³¢ "########           ##########"
+å›æ³¢ "###############    ##########"
+å›æ³¢ "###############    ##########"
+å›æ³¢ "########           ##########"
+å›æ³¢ "#############################"
+ç¡çœ 1
+æ¸…æ¾ˆ
+å›æ³¢ "-----------------------------"
+å›æ³¢ "#############################"
+å›æ³¢ "#######   ####   ############"
+å›æ³¢ "#######   ####   ############"
+å›æ³¢ "#######   ####   ############"
+å›æ³¢ "#######               #######"
+å›æ³¢ "##############   ############"
+å›æ³¢ "##############   ############"
+å›æ³¢ "##############   ############"
+å›æ³¢ "#############################"
+ç¡çœ 1
+æ¸…æ¾ˆ
+å›æ³¢ "-----------------------------"
+å›æ³¢ "#############################"
+å›æ³¢ "########            #########"
+å›æ³¢ "#################   #########"
+å›æ³¢ "#################   #########"
+å›æ³¢ "########            #########"
+å›æ³¢ "#################   #########"
+å›æ³¢ "#################   #########"
+å›æ³¢ "########            #########"
+å›æ³¢ "#############################"
+ç¡çœ 1
+æ¸…æ¾ˆ
+å›æ³¢ "-----------------------------"
+å›æ³¢ "#############################"
+å›æ³¢ "########           ##########"
+å›æ³¢ "################   ##########"
+å›æ³¢ "################   ##########"
+å›æ³¢ "########           ##########"
+å›æ³¢ "########   ##################"
+å›æ³¢ "########   ##################"
+å›æ³¢ "########           ##########"
+å›æ³¢ "#############################"
+ç¡çœ 1
+æ¸…æ¾ˆ
+å›æ³¢ "-----------------------------"
+å›æ³¢ "#############################"
+å›æ³¢ "############   ##############"
+å›æ³¢ "############   ##############"
+å›æ³¢ "############   ##############"
+å›æ³¢ "############   ##############"
+å›æ³¢ "############   ##############"
+å›æ³¢ "############   ##############"
+å›æ³¢ "############   ##############"
+å›æ³¢ "#############################"
+å›æ³¢ "-----------------------------"
+ç¡çœ 1
+æ¸…æ¾ˆ
+å›æ³¢ "--------------------------------------------------------------------------------"
+å›æ³¢-e"${Info}éƒ¨ç½²å®Œæˆï¼Œè¯·æ‰“å¼€httpï¼š/$ç½‘ç«™å³å¯æµè§ˆ"
+å›æ³¢-e"${Info}é»˜è®¤ç”Ÿæˆçš„ç®¡ç†å‘˜ç”¨æˆ·åï¼šç®¡ç†å¯†ç ä¸º7å½©è‰²åšå®¢"
+å›æ³¢-e"${Info}å¦‚æœæ‰“ä¸å¼€ç«™ç‚¹ï¼Œè¯·åˆ°å®å¡”é¢æ¿ä¸­è½¯ä»¶ç®¡ç†é‡å¯nginxå’Œphp7.1"
+å›æ³¢-e"${Info}è‡ªå®šä¹‰é…ç½®ï¼Œè¯·æ‰“å¼€/www/wwwroot/$ç½‘ç«™/config/.config.phpè¿›è¡Œä¿®æ”¹"
+å›æ³¢-e"${Info}gitHubåœ°å€ï¼šhttpsï¼š/github.com/lizhongnian/sspanel-v3-mod-uim-bt"
+å›æ³¢-e"${Info}https://www.7colorblog.com/ï¼šåšå®¢åœ°å€"
+å›æ³¢ "--------------------------------------------------------------------------------"

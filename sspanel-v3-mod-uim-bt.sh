@@ -1,6 +1,23 @@
 #!/bin/bash
 ##检查操作系统
-
+check_sys(){
+	if [[ -f /etc/redhat-release ]]; then
+ release="centos"
+	elif cat /etc/issue | grep -q -E -i "debian"; then
+ release="debian"
+	elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+ release="ubuntu"
+	elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+ release="centos"
+	elif cat /proc/version | grep -q -E -i "debian"; then
+ release="debian"
+	elif cat /proc/version | grep -q -E -i "ubuntu"; then
+ release="ubuntu"
+	elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
+ release="centos"
+    fi
+ bit=`uname -m`
+}
 
 ##检查是否root用户
 [ $(id -u) != "0" ] && { echo -e " “\033[31m Error: 必须使用root用户执行此脚本！\033[0m”"; exit 1; }

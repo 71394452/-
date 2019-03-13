@@ -1,6 +1,6 @@
 #!/bin/bash
 ##检查操作系统
-check_sys(){
+
 	if [[ -f /etc/redhat-release ]]; then
 		release="centos"
 	elif cat /etc/issue | grep -q -E -i "debian"; then

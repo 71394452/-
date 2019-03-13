@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 ##检查操作系统
 check_sys(){
 	if [[ -f /etc/redhat-release ]]; then
